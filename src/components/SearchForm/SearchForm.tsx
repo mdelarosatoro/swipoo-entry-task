@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react';
 import { BRANDS, FUEL } from '../../data/carData';
 import { CarI } from '../../interfaces/cars.interfaces';
 import { getCars } from '../../services/apiRequest';
+import CarDetails from '../CarDetails/CarDetails';
 
 function SearchForm() {
     const [formValue, setFormValue] = useState({
@@ -11,11 +12,34 @@ function SearchForm() {
     });
 
     const [cars, setCars] = useState<CarI[]>([]);
+    const [selectedCar, setSelectedCar] = useState<CarI>({
+        brand: '',
+        model: '',
+        period: '',
+        cc: '',
+        cylinders: '',
+        fuel: '',
+        kw: '',
+        cvf: '',
+        cv: '',
+        value: '',
+    });
 
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement;
         setFormValue({ ...formValue, [target.name]: target.value });
     };
+
+    const handleSelect = (e: ChangeEvent) => {
+        const target = e.target as HTMLSelectElement;
+        setSelectedCar(
+            cars.find((item) => item.model === target.value) as CarI
+        );
+    };
+
+    useEffect(() => {
+        console.log(selectedCar);
+    }, [selectedCar]);
 
     useEffect(() => {
         if (
@@ -87,8 +111,8 @@ function SearchForm() {
                 <select
                     name="model"
                     id="model"
-                    // value={formValue.fuel}
-                    // onChange={handleChange}
+                    value={selectedCar.model}
+                    onChange={handleSelect}
                 >
                     <option disabled selected>
                         {' '}
@@ -99,6 +123,7 @@ function SearchForm() {
                     ))}
                 </select>
             </div>
+            {selectedCar && <CarDetails car={selectedCar} />}
         </form>
     );
 }
