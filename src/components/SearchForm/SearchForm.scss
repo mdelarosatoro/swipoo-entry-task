@@ -27,7 +27,7 @@
     }
 
     &__label {
-        width: 50%;
+        width: 100%;
         display: block;
         color: variables.$primary-color-bright;
         font-weight: bold;
@@ -38,6 +38,34 @@
         padding: 0.4rem 0.7rem;
         border-radius: 0.5rem;
         border: none;
-        width: fit-content;
+        width: 100%;
+    }
+
+    &__loading {
+        width: 50px;
+        height: 50px;
+        background-color: variables.$cta-color;
+        animation: rotation 3s linear infinite;
+    }
+}
+
+@media screen and (min-width: 476px) {
+    .form {
+        &__label {
+            width: 45%;
+        }
+
+        &__input {
+            width: 45%;
+        }
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }
