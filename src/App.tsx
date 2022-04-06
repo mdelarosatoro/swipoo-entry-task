@@ -1,4 +1,4 @@
-import './App.css';
+import './App.scss';
 import SearchForm from './components/SearchForm/SearchForm';
 
 function App() {

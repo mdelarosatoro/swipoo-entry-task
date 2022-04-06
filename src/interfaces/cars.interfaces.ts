@@ -10,3 +10,8 @@ export interface CarI {
     cv: string;
     value: string;
 }
+
+export interface ValuationI {
+    year: number;
+    value: number;
+}

@@ -1,0 +1,22 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 90vw;
+    padding: 1rem;
+    row-gap: 1rem;
+
+    &__input-container {
+        width: 100%;
+        display: flex;
+    }
+
+    &__label {
+        width: 50%;
+        display: block;
+    }
+
+    &__input {
+        display: block;
+        width: 50%;
+    }
+}
