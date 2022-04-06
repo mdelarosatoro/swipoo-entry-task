@@ -50,14 +50,6 @@ function SearchForm() {
     };
 
     useEffect(() => {
-        console.log(valuationOverTime);
-    }, [valuationOverTime]);
-
-    useEffect(() => {
-        console.log(formValue);
-    }, [formValue]);
-
-    useEffect(() => {
         if (
             formValue.brand !== '' &&
             formValue.enrollmentDate !== '' &&
@@ -68,7 +60,6 @@ function SearchForm() {
                 formValue.enrollmentDate,
                 formValue.fuel
             ).then((resp) => {
-                console.log(resp.data);
                 setCars(resp.data.cars);
             });
         }
