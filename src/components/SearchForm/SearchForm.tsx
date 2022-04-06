@@ -67,6 +67,7 @@ function SearchForm() {
 
     return (
         <form className="form">
+            <h1 className="form__title">Swipoo Entry Task</h1>
             <div className="form__input-container">
                 <label className="form__label" htmlFor="brand">
                     Marca
