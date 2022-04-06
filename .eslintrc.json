@@ -32,7 +32,8 @@
         "no-shadow": "off",
         "@typescript-eslint/no-shadow": ["error"],
         "react/react-in-jsx-scope": "off",
-        "import/prefer-default-export": "off"
+        "import/prefer-default-export": "off",
+        "jsx-a11y/label-has-associated-control": "off"
     },
     "settings": {
         "import/resolver": {

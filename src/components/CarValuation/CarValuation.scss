@@ -1,0 +1,45 @@
+.valuation {
+    display: flex;
+    flex-direction: column;
+    border-collapse: collapse;
+
+    &__title-container {
+        padding: 1rem;
+        border: 1px solid black;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        border-bottom: none;
+    }
+
+    &__title {
+    }
+
+    &__row {
+        display: flex;
+        width: 100%;
+    }
+
+    &__cell {
+        display: block;
+        width: 50%;
+        padding: 1rem;
+        border: 1px solid black;
+        border-bottom: none;
+
+        &--field {
+            border-right: none;
+        }
+    }
+}
+
+.valuation__row:last-child .valuation__cell {
+    border-bottom: 1px solid black;
+}
+
+.valuation__row:last-child .valuation__cell:first-child {
+    border-bottom-left-radius: 1rem;
+}
+
+.valuation__row:last-child .valuation__cell:last-child {
+    border-bottom-right-radius: 1rem;
+}
