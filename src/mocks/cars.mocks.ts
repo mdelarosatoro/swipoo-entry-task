@@ -8,5 +8,5 @@ export const mockCar = {
     kw: 'TestKw',
     cvf: 'TestCVF',
     cv: 'TestCV',
-    value: 'TestValue',
+    value: '15000',
 };

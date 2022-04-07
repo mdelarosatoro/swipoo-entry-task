@@ -20,6 +20,7 @@ function SearchForm() {
         []
     );
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
 
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement;
@@ -35,14 +36,17 @@ function SearchForm() {
             formValue.fuel !== ''
         ) {
             setLoading(true);
-            getCars(
-                formValue.brand,
-                formValue.enrollmentDate,
-                formValue.fuel
-            ).then((resp) => {
-                setLoading(false);
-                setCars(resp.data.cars);
-            });
+            getCars(formValue.brand, formValue.enrollmentDate, formValue.fuel)
+                .then((resp) => {
+                    setLoading(false);
+                    setError(null);
+                    setCars(resp.data.cars);
+                })
+                .catch(() => {
+                    const fetchError = new Error('Error while fetching');
+                    setError(fetchError);
+                    setLoading(false);
+                });
         }
     }, [formValue]);
 
@@ -127,6 +131,7 @@ function SearchForm() {
                     </select>
                 </div>
             )}
+            {error && <p>{error.message}</p>}
             {formValue.brand &&
                 formValue.enrollmentDate &&
                 formValue.fuel &&
@@ -156,7 +161,7 @@ function SearchForm() {
                         </select>
                     </div>
                 ) : (
-                    <p>No se encontró ningún modelo.</p>
+                    !error && <p>No se encontró ningún modelo.</p>
                 ))}
             {selectedCar.brand && <CarDetails car={selectedCar} />}
             {valuationOverTime.length > 0 && (
