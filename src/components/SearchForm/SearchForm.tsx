@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { BRANDS, FUEL } from '../../data/carData';
+import { BRANDS, emptyCarSchema, FUEL } from '../../data/carData';
 import { calculateDeprecation } from '../../helpers/calculateDeprecation';
 import { CarI, ValuationI } from '../../interfaces/cars.interfaces';
 import { getCars } from '../../services/apiRequest';
@@ -15,18 +15,7 @@ function SearchForm() {
         fuel: '',
     });
     const [cars, setCars] = useState<CarI[]>([]);
-    const [selectedCar, setSelectedCar] = useState<CarI>({
-        brand: '',
-        model: '',
-        period: '',
-        cc: '',
-        cylinders: '',
-        fuel: '',
-        kw: '',
-        cvf: '',
-        cv: '',
-        value: '',
-    });
+    const [selectedCar, setSelectedCar] = useState<CarI>(emptyCarSchema);
     const [valuationOverTime, setValuationOverTime] = useState<ValuationI[]>(
         []
     );
@@ -35,20 +24,8 @@ function SearchForm() {
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement;
         setFormValue({ ...formValue, [target.name]: target.value });
-    };
-
-    const handleSelect = (e: ChangeEvent) => {
-        const target = e.target as HTMLSelectElement;
-        const selected = cars.find(
-            (item) => item.model === target.value
-        ) as CarI;
-        setSelectedCar(selected);
-        setValuationOverTime(
-            calculateDeprecation(
-                Number(selected.value),
-                formValue.enrollmentDate
-            )
-        );
+        setSelectedCar(emptyCarSchema);
+        setValuationOverTime([]);
     };
 
     useEffect(() => {
@@ -68,6 +45,20 @@ function SearchForm() {
             });
         }
     }, [formValue]);
+
+    const handleSelect = (e: ChangeEvent) => {
+        const target = e.target as HTMLSelectElement;
+        const selected = cars.find(
+            (item) => item.model === target.value
+        ) as CarI;
+        setSelectedCar(selected);
+        setValuationOverTime(
+            calculateDeprecation(
+                Number(selected.value),
+                formValue.enrollmentDate
+            )
+        );
+    };
 
     return (
         <form className="form">
