@@ -54,3 +54,16 @@ export const BRANDS = [
 ];
 
 export const FUEL = ['D', 'Elc', 'G', 'S', 'DyE', 'GyE'];
+
+export const emptyCarSchema = {
+    brand: '',
+    model: '',
+    period: '',
+    cc: '',
+    cylinders: '',
+    fuel: '',
+    kw: '',
+    cvf: '',
+    cv: '',
+    value: '',
+};
