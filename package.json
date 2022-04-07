@@ -61,5 +61,12 @@
     },
     "prettier": {
         "singleQuote": true
+    },
+    "jest": {
+        "collectCoverageFrom": [
+            "!src/index.tsx",
+            "!src/react-app-env.d.ts",
+            "!src/reportWebVitals.ts"
+        ]
     }
 }

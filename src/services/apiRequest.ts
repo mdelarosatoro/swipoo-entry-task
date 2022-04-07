@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 
 const apiUrl = `https://api-sandbox.swipoo.com/itp/cars/?`;
 
-export const getCars = (
+export const getCars = async (
     brand: string,
     enrollmentDate: string,
     fuel: string
