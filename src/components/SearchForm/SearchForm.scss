@@ -1,22 +1,73 @@
+@use '../../scss/variables';
+
 .form {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 7px 7px 7px 4px rgba(0, 0, 0, 0.3);
     width: 90vw;
+    max-width: 600px;
     padding: 1rem;
     row-gap: 1rem;
+    border-radius: 1rem;
+    background-color: variables.$secondary-color-bright;
+
+    &__title {
+        color: variables.$primary-color-bright;
+        margin-bottom: 1rem;
+    }
 
     &__input-container {
         width: 100%;
         display: flex;
+        flex-wrap: wrap;
+        column-gap: 1rem;
+        row-gap: 0.6rem;
     }
 
     &__label {
-        width: 50%;
+        width: 100%;
         display: block;
+        color: variables.$primary-color-bright;
+        font-weight: bold;
     }
 
     &__input {
         display: block;
-        width: 50%;
+        padding: 0.4rem 0.7rem;
+        border-radius: 0.5rem;
+        border: none;
+        width: 100%;
+    }
+
+    &__loading {
+        width: 50px;
+        height: 50px;
+        background-color: variables.$cta-color;
+        animation: rotation 3s linear infinite;
+    }
+}
+
+@media screen and (min-width: 476px) {
+    .form {
+        padding: 3rem;
+
+        &__label {
+            width: 45%;
+        }
+
+        &__input {
+            width: 45%;
+        }
+    }
+}
+
+@keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

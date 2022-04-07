@@ -1,5 +1,11 @@
+@use './scss/variables';
+
 .App {
     display: flex;
     flex-direction: column;
-    padding: 2rem;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    background-color: variables.$primary-color-bright;
 }
