@@ -8,7 +8,7 @@
     box-shadow: 7px 7px 7px 4px rgba(0, 0, 0, 0.3);
     width: 90vw;
     max-width: 600px;
-    padding: 3rem;
+    padding: 1rem;
     row-gap: 1rem;
     border-radius: 1rem;
     background-color: variables.$secondary-color-bright;
@@ -51,6 +51,8 @@
 
 @media screen and (min-width: 476px) {
     .form {
+        padding: 3rem;
+
         &__label {
             width: 45%;
         }

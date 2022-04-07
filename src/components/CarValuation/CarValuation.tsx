@@ -17,7 +17,7 @@ function CarValuation({
                         {item.year}
                     </p>
                     <p className="valuation__cell">
-                        {item.value.toLocaleString()}
+                        €{item.value.toLocaleString()}
                     </p>
                 </div>
             ))}
