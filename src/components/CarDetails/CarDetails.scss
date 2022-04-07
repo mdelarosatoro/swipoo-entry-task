@@ -1,17 +1,23 @@
+@use '../../scss/variables';
+
 .details {
     display: flex;
     flex-direction: column;
     border-collapse: collapse;
+    width: 100%;
 
     &__title-container {
         padding: 1rem;
-        border: 1px solid black;
+        border: 1px solid variables.$cell-border-color;
         border-top-left-radius: 1rem;
         border-top-right-radius: 1rem;
         border-bottom: none;
+        color: variables.$secondary-color-bright;
+        background-color: variables.$primary-color-bright;
     }
 
     &__title {
+        font-weight: bold;
     }
 
     &__row {
@@ -23,8 +29,9 @@
         display: block;
         width: 50%;
         padding: 1rem;
-        border: 1px solid black;
+        border: 1px solid variables.$cell-border-color;
         border-bottom: none;
+        background-color: variables.$primary-color-bright;
 
         &--field {
             border-right: none;
@@ -33,7 +40,7 @@
 }
 
 .details__row:last-child .details__cell {
-    border-bottom: 1px solid black;
+    border-bottom: 1px solid variables.$cell-border-color;
 }
 
 .details__row:last-child .details__cell:first-child {
