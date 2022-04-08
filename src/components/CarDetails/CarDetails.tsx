@@ -10,43 +10,49 @@ function CarDetails({ car }: { car: CarI }) {
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">Marca</p>
-                <p className="details__cell">{car.brand}</p>
+                <p className="details__cell details__cell--value">
+                    {car.brand}
+                </p>
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">Modelo</p>
-                <p className="details__cell">{car.model}</p>
+                <p className="details__cell details__cell--value">
+                    {car.model}
+                </p>
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">Cilindrada</p>
-                <p className="details__cell">{car.cc}</p>
+                <p className="details__cell details__cell--value">{car.cc}</p>
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">Cilindros</p>
-                <p className="details__cell">{car.cylinders}</p>
+                <p className="details__cell details__cell--value">
+                    {car.cylinders}
+                </p>
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">
                     Combustible
                 </p>
-                <p className="details__cell">{car.fuel}</p>
+                <p className="details__cell details__cell--value">{car.fuel}</p>
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">
                     Potencia (kW)
                 </p>
-                <p className="details__cell">{car.kw}</p>
+                <p className="details__cell details__cell--value">{car.kw}</p>
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">
                     Potencia fiscal
                 </p>
-                <p className="details__cell">{car.cvf}</p>
+                <p className="details__cell details__cell--value">{car.cvf}</p>
             </div>
             <div className="details__row">
                 <p className="details__cell details__cell--field">
                     Potencia (CV)
                 </p>
-                <p className="details__cell">{car.cv}</p>
+                <p className="details__cell details__cell--value">{car.cv}</p>
             </div>
         </div>
     );
