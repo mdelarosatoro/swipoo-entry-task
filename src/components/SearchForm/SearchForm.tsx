@@ -64,11 +64,11 @@ function SearchForm() {
         );
     };
 
-    const checkFetchState = (fetchedCars: CarI[]) => {
+    const checkFetchState = () => {
         if (loading) {
             return <div className="form__loading" />;
         }
-        if (fetchedCars.length > 0) {
+        if (cars.length > 0) {
             return (
                 <div className="form__input-container">
                     <label className="form__label" htmlFor="model">
@@ -85,7 +85,7 @@ function SearchForm() {
                             {' '}
                             -- select an option --{' '}
                         </option>
-                        {fetchedCars.map((car: CarI) => (
+                        {cars.map((car: CarI) => (
                             <option key={car.model} value={car.model}>
                                 {car.model}
                             </option>
@@ -94,7 +94,7 @@ function SearchForm() {
                 </div>
             );
         }
-        if (fetchedCars.length === 0 && !error) {
+        if (cars.length === 0 && !error) {
             return <p>No se encontró ningún modelo.</p>;
         }
         return <p>{error!.message || 'An error occured'}</p>;
@@ -167,38 +167,10 @@ function SearchForm() {
                     </select>
                 </div>
             )}
-            {error && <p>{error.message}</p>}
             {formValue.brand &&
                 formValue.enrollmentDate &&
                 formValue.fuel &&
-                (loading ? (
-                    <div className="form__loading" />
-                ) : cars.length > 0 ? (
-                    <div className="form__input-container">
-                        <label className="form__label" htmlFor="model">
-                            Modelo
-                        </label>
-                        <select
-                            className="form__input"
-                            name="model"
-                            id="model"
-                            value={selectedCar.model}
-                            onChange={handleSelect}
-                        >
-                            <option disabled value="">
-                                {' '}
-                                -- select an option --{' '}
-                            </option>
-                            {cars.map((car) => (
-                                <option key={car.model} value={car.model}>
-                                    {car.model}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                ) : (
-                    !error && <p>No se encontró ningún modelo.</p>
-                ))}
+                checkFetchState()}
             {selectedCar.brand && <CarDetails car={selectedCar} />}
             {valuationOverTime.length > 0 && (
                 <CarValuation valuationOverTime={valuationOverTime} />
