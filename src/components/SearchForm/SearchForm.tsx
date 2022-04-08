@@ -26,9 +26,28 @@ function SearchForm() {
 
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement;
-        setFormValue({ ...formValue, [target.name]: target.value });
+        if (target.name === 'brand') {
+            setFormValue({
+                ...formValue,
+                [target.name]: target.value,
+                enrollmentDate: '',
+                fuel: '',
+            });
+        } else if (target.name === 'enrollmentDate') {
+            setFormValue({
+                ...formValue,
+                [target.name]: target.value,
+                fuel: '',
+            });
+        } else {
+            setFormValue({
+                ...formValue,
+                [target.name]: target.value,
+            });
+        }
         setSelectedCar(emptyCarSchema);
         setValuationOverTime([]);
+        setCars([]);
     };
 
     useEffect(() => {
