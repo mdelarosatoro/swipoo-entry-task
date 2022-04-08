@@ -13,3 +13,5 @@ Technologies used in this project:
 -   Jest
 -   Testing Library
 -   Cypress
+
+Deployed at: https://swipoo-entry-task.netlify.app/
