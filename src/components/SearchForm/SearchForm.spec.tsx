@@ -1,10 +1,4 @@
-import {
-    fireEvent,
-    prettyDOM,
-    render,
-    screen,
-    waitFor,
-} from '@testing-library/react';
+import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AxiosResponse } from 'axios';
 import { BRANDS, FUEL } from '../../data/carData';
