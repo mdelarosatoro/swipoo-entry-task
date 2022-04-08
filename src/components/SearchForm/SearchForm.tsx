@@ -6,6 +6,7 @@ import { CarI, ValuationI } from '../../interfaces/cars.interfaces';
 import { getCars } from '../../services/apiRequest';
 import CarDetails from '../CarDetails/CarDetails';
 import CarValuation from '../CarValuation/CarValuation';
+import Loading from '../Loading/Loading';
 import './SearchForm.scss';
 
 function SearchForm() {
@@ -66,7 +67,7 @@ function SearchForm() {
 
     const checkFetchState = () => {
         if (loading) {
-            return <div className="form__loading" />;
+            return <Loading />;
         }
         if (cars.length > 0) {
             return (
