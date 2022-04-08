@@ -6,6 +6,8 @@ import { CarI, ValuationI } from '../../interfaces/cars.interfaces';
 import { getCars } from '../../services/apiRequest';
 import CarDetails from '../CarDetails/CarDetails';
 import CarValuation from '../CarValuation/CarValuation';
+import DisplayError from '../Error/Error';
+import Loading from '../Loading/Loading';
 import './SearchForm.scss';
 
 function SearchForm() {
@@ -20,6 +22,7 @@ function SearchForm() {
         []
     );
     const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
 
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement;
@@ -35,14 +38,17 @@ function SearchForm() {
             formValue.fuel !== ''
         ) {
             setLoading(true);
-            getCars(
-                formValue.brand,
-                formValue.enrollmentDate,
-                formValue.fuel
-            ).then((resp) => {
-                setLoading(false);
-                setCars(resp.data.cars);
-            });
+            getCars(formValue.brand, formValue.enrollmentDate, formValue.fuel)
+                .then((resp) => {
+                    setLoading(false);
+                    setError(null);
+                    setCars(resp.data.cars);
+                })
+                .catch(() => {
+                    const fetchError = new Error('Error while fetching');
+                    setError(fetchError);
+                    setLoading(false);
+                });
         }
     }, [formValue]);
 
@@ -58,6 +64,42 @@ function SearchForm() {
                 formValue.enrollmentDate
             )
         );
+    };
+
+    const checkFetchState = () => {
+        if (loading) {
+            return <Loading />;
+        }
+        if (cars.length > 0) {
+            return (
+                <div className="form__input-container">
+                    <label className="form__label" htmlFor="model">
+                        Modelo
+                    </label>
+                    <select
+                        className="form__input"
+                        name="model"
+                        id="model"
+                        value={selectedCar.model}
+                        onChange={handleSelect}
+                    >
+                        <option disabled value="">
+                            {' '}
+                            -- select an option --{' '}
+                        </option>
+                        {cars.map((car: CarI) => (
+                            <option key={car.model} value={car.model}>
+                                {car.model}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            );
+        }
+        if (cars.length === 0 && !error) {
+            return <DisplayError message="No se encontró ningún modelo." />;
+        }
+        return <DisplayError message={error?.message as string} />;
     };
 
     return (
@@ -130,34 +172,7 @@ function SearchForm() {
             {formValue.brand &&
                 formValue.enrollmentDate &&
                 formValue.fuel &&
-                (loading ? (
-                    <div className="form__loading" />
-                ) : cars.length > 0 ? (
-                    <div className="form__input-container">
-                        <label className="form__label" htmlFor="model">
-                            Modelo
-                        </label>
-                        <select
-                            className="form__input"
-                            name="model"
-                            id="model"
-                            value={selectedCar.model}
-                            onChange={handleSelect}
-                        >
-                            <option disabled value="">
-                                {' '}
-                                -- select an option --{' '}
-                            </option>
-                            {cars.map((car) => (
-                                <option key={car.model} value={car.model}>
-                                    {car.model}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                ) : (
-                    <p>No se encontró ningún modelo.</p>
-                ))}
+                checkFetchState()}
             {selectedCar.brand && <CarDetails car={selectedCar} />}
             {valuationOverTime.length > 0 && (
                 <CarValuation valuationOverTime={valuationOverTime} />

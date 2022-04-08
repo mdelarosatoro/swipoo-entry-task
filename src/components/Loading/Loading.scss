@@ -1,0 +1,9 @@
+@use '../../scss/variables';
+
+.loading {
+    width: 50px;
+    height: 50px;
+    background-color: variables.$cta-color;
+    animation: rotation 3s linear infinite;
+    margin: 1rem;
+}
