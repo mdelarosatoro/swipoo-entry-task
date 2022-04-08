@@ -21,7 +21,7 @@ function SearchForm() {
     const [valuationOverTime, setValuationOverTime] = useState<ValuationI[]>(
         []
     );
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
     const handleChange = (e: ChangeEvent) => {

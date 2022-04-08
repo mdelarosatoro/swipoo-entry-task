@@ -1,4 +1,3 @@
-import React from 'react';
 import { CarI } from '../../interfaces/cars.interfaces';
 import './CarDetails.scss';
 
