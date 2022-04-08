@@ -1,4 +1,4 @@
-import { prettyDOM, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import CarValuation from './CarValuation';
 
 describe('Given the CarValuation component', () => {
@@ -9,11 +9,8 @@ describe('Given the CarValuation component', () => {
                 { year: 2021, value: 27000 },
                 { year: 2022, value: 24300 },
             ];
-            const { container } = render(
-                <CarValuation valuationOverTime={arrayOfValuations} />
-            );
+            render(<CarValuation valuationOverTime={arrayOfValuations} />);
 
-            console.log(prettyDOM(container));
             waitFor(() => {
                 expect(
                     screen.getByText(/Valoración Venal/)

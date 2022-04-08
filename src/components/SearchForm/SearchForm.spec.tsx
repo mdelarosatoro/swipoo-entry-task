@@ -1,4 +1,10 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import {
+    fireEvent,
+    prettyDOM,
+    render,
+    screen,
+    waitFor,
+} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { AxiosResponse } from 'axios';
 import { BRANDS, FUEL } from '../../data/carData';
@@ -83,9 +89,7 @@ describe('Given the SearchForm component', () => {
     });
     describe('When picking all fields and api response throws', () => {
         beforeEach(() => {
-            getCarsMock.mockRejectedValue(
-                new Error('Error while fetching') as unknown as AxiosResponse
-            ) as jest.Mock;
+            getCarsMock.mockRejectedValue('');
         });
         test('It should display error message', async () => {
             await render(<SearchForm />);
@@ -99,6 +103,33 @@ describe('Given the SearchForm component', () => {
                 screen.getByLabelText('Combustible'),
                 ['G']
             );
+            waitFor(() => {
+                expect(
+                    screen.getByText(/Error while fetching/)
+                ).toBeInTheDocument();
+            });
+        });
+    });
+    describe('When picking all fields and api response returns empty array', () => {
+        beforeEach(() => {
+            getCarsMock.mockResolvedValue({
+                data: { cars: [] },
+            } as AxiosResponse) as jest.Mock;
+        });
+        test('It should display error message', async () => {
+            await render(<SearchForm />);
+            const expectedText = 'No se encontró ningún modelo.';
+            await userEvent.selectOptions(screen.getByLabelText('Marca'), [
+                'Abarth',
+            ]);
+            await fireEvent.change(screen.getByLabelText(datePickerLabel), {
+                target: { value: '2020-02-05' },
+            });
+            await userEvent.selectOptions(
+                screen.getByLabelText('Combustible'),
+                ['G']
+            );
+            expect(screen.getByText(expectedText)).toBeInTheDocument();
         });
     });
     describe('When selecting a car model', () => {

@@ -6,6 +6,7 @@ import { CarI, ValuationI } from '../../interfaces/cars.interfaces';
 import { getCars } from '../../services/apiRequest';
 import CarDetails from '../CarDetails/CarDetails';
 import CarValuation from '../CarValuation/CarValuation';
+import DisplayError from '../Error/Error';
 import Loading from '../Loading/Loading';
 import './SearchForm.scss';
 
@@ -96,9 +97,9 @@ function SearchForm() {
             );
         }
         if (cars.length === 0 && !error) {
-            return <p>No se encontró ningún modelo.</p>;
+            return <DisplayError message="No se encontró ningún modelo." />;
         }
-        return <p>{error!.message || 'An error occured'}</p>;
+        return <DisplayError message={error?.message as string} />;
     };
 
     return (

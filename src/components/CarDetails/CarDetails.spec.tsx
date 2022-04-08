@@ -1,12 +1,11 @@
-import { prettyDOM, render, waitFor } from '@testing-library/react';
+import { render, waitFor } from '@testing-library/react';
 import { mockCar } from '../../mocks/cars.mocks';
 import CarDetails from './CarDetails';
 
 describe('Given the CarDetails component', () => {
     describe('When called to render with a car as a prop', () => {
         test('It should render the car data', () => {
-            const { container } = render(<CarDetails car={mockCar} />);
-            console.log(prettyDOM(container));
+            render(<CarDetails car={mockCar} />);
             waitFor(() => {
                 expect(mockCar.brand).toBeInTheDocument();
                 expect(mockCar.model).toBeInTheDocument();

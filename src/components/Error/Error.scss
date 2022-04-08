@@ -1,0 +1,10 @@
+.error {
+    background-color: red;
+    padding: 0.5rem 0.7rem;
+    border-radius: 1rem;
+
+    &__message {
+        color: white;
+        margin: 1rem;
+    }
+}
