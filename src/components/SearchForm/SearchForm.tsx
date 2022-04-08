@@ -64,6 +64,42 @@ function SearchForm() {
         );
     };
 
+    const checkFetchState = (fetchedCars: CarI[]) => {
+        if (loading) {
+            return <div className="form__loading" />;
+        }
+        if (fetchedCars.length > 0) {
+            return (
+                <div className="form__input-container">
+                    <label className="form__label" htmlFor="model">
+                        Modelo
+                    </label>
+                    <select
+                        className="form__input"
+                        name="model"
+                        id="model"
+                        value={selectedCar.model}
+                        onChange={handleSelect}
+                    >
+                        <option disabled value="">
+                            {' '}
+                            -- select an option --{' '}
+                        </option>
+                        {fetchedCars.map((car: CarI) => (
+                            <option key={car.model} value={car.model}>
+                                {car.model}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            );
+        }
+        if (fetchedCars.length === 0 && !error) {
+            return <p>No se encontró ningún modelo.</p>;
+        }
+        return <p>{error!.message || 'An error occured'}</p>;
+    };
+
     return (
         <form className="form">
             <h1 className="form__title">Swipoo Entry Task</h1>
