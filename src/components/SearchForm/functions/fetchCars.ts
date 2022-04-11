@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
-import { CarI } from '../../interfaces/cars.interfaces';
-import { FormValueI } from '../../interfaces/form.interfaces';
-import { getCars } from '../../services/apiRequest';
+import { CarI } from '../../../interfaces/cars.interfaces';
+import { FormValueI } from '../../../interfaces/form.interfaces';
+import { getCars } from '../../../services/apiRequest';
 
 export const fetchCars = async (
     formValue: FormValueI,

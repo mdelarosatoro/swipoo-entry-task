@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { FormValueI } from '../../interfaces/form.interfaces';
+import { FormValueI } from '../../../interfaces/form.interfaces';
 
 export const handleFormChange = (
     setFormValue: Dispatch<SetStateAction<FormValueI>>,

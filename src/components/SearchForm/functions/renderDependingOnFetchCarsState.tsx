@@ -1,15 +1,15 @@
 import { ChangeEventHandler } from 'react';
-import { CarI } from '../../interfaces/cars.interfaces';
-import SelectBlock from '../Core/SelectBlock/SelectBlock';
-import Loading from '../Loading/Loading';
-import DisplayError from '../Error/Error';
+import { CarI } from '../../../interfaces/cars.interfaces';
+import SelectBlock from '../../Core/SelectBlock/SelectBlock';
+import Loading from '../../Loading/Loading';
+import DisplayError from '../../Error/Error';
 
 export const renderDependingOnFetchCarsState = (
     loading: boolean,
     cars: CarI[],
     selectedCar: CarI,
     handleSelect: ChangeEventHandler,
-    error: Error
+    error: Error | null
 ) => {
     if (loading) {
         return <Loading />;

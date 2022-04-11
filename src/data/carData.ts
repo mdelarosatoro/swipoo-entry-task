@@ -67,3 +67,9 @@ export const emptyCarSchema = {
     cv: '',
     value: '',
 };
+
+export const initialFormState = {
+    brand: '',
+    enrollmentDate: '',
+    fuel: '',
+};

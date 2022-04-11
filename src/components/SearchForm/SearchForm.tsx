@@ -1,23 +1,25 @@
 /* eslint-disable no-nested-ternary */
 import { ChangeEvent, useEffect, useState } from 'react';
-import { BRANDS, emptyCarSchema, FUEL } from '../../data/carData';
+import {
+    BRANDS,
+    emptyCarSchema,
+    FUEL,
+    initialFormState,
+} from '../../data/carData';
 import { calculateDeprecation } from '../../helpers/calculateDeprecation';
 import { CarI, ValuationI } from '../../interfaces/cars.interfaces';
 import { FormValueI } from '../../interfaces/form.interfaces';
 import CarDetails from '../CarDetails/CarDetails';
 import CarValuation from '../CarValuation/CarValuation';
+import DateInput from '../Core/DateInput/DateInput';
 import SelectBlock from '../Core/SelectBlock/SelectBlock';
-import { fetchCars } from './fetchCars';
-import { handleFormChange } from './handleFormChange';
-import { renderDependingOnFetchCarsState } from './renderDependingOnFetchCarsState';
+import { fetchCars } from './functions/fetchCars';
+import { handleFormChange } from './functions/handleFormChange';
+import { renderDependingOnFetchCarsState } from './functions/renderDependingOnFetchCarsState';
 import './SearchForm.scss';
 
 function SearchForm() {
-    const [formValue, setFormValue] = useState<FormValueI>({
-        brand: '',
-        enrollmentDate: '',
-        fuel: '',
-    });
+    const [formValue, setFormValue] = useState<FormValueI>(initialFormState);
     const [cars, setCars] = useState<CarI[]>([]);
     const [selectedCar, setSelectedCar] = useState<CarI>(emptyCarSchema);
     const [valuationOverTime, setValuationOverTime] = useState<ValuationI[]>(
@@ -69,22 +71,13 @@ function SearchForm() {
                 name="brand"
             />
             {formValue.brand && (
-                <div className="form__input-container">
-                    <label
-                        className="form__label"
-                        htmlFor="initial-enrollment-date"
-                    >
-                        Fecha de la Primera Matriculación
-                    </label>
-                    <input
-                        className="form__input"
-                        value={formValue.enrollmentDate}
-                        type="date"
-                        name="enrollmentDate"
-                        id="initial-enrollment-date"
-                        onChange={handleChange}
-                    />
-                </div>
+                <DateInput
+                    id="initial-enrollment-date"
+                    label="Fecha de la Primera Matriculación"
+                    name="enrollmentDate"
+                    formValue={formValue}
+                    handleChange={handleChange}
+                />
             )}
             {formValue.brand && formValue.enrollmentDate && (
                 <SelectBlock
