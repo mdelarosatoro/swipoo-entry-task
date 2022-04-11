@@ -1,17 +1,19 @@
 /* eslint-disable no-nested-ternary */
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { BRANDS, emptyCarSchema, FUEL } from '../../data/carData';
 import { calculateDeprecation } from '../../helpers/calculateDeprecation';
 import { CarI, ValuationI } from '../../interfaces/cars.interfaces';
-import { getCars } from '../../services/apiRequest';
+import { FormValueI } from '../../interfaces/form.interfaces';
 import CarDetails from '../CarDetails/CarDetails';
 import CarValuation from '../CarValuation/CarValuation';
-import DisplayError from '../Error/Error';
-import Loading from '../Loading/Loading';
+import SelectBlock from '../Core/SelectBlock/SelectBlock';
+import { fetchCars } from './fetchCars';
+import { handleFormChange } from './handleFormChange';
+import { renderDependingOnFetchCarsState } from './renderDependingOnFetchCarsState';
 import './SearchForm.scss';
 
 function SearchForm() {
-    const [formValue, setFormValue] = useState({
+    const [formValue, setFormValue] = useState<FormValueI>({
         brand: '',
         enrollmentDate: '',
         fuel: '',
@@ -24,52 +26,23 @@ function SearchForm() {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
+    const checkAllFieldsAreFilled = () =>
+        formValue.brand && formValue.enrollmentDate && formValue.fuel;
+
+    useEffect(() => {
+        if (checkAllFieldsAreFilled()) {
+            setLoading(true);
+            fetchCars(formValue, setLoading, setError, setCars);
+        }
+    }, [formValue]);
+
     const handleChange = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement;
-        if (target.name === 'brand') {
-            setFormValue({
-                ...formValue,
-                [target.name]: target.value,
-                enrollmentDate: '',
-                fuel: '',
-            });
-        } else if (target.name === 'enrollmentDate') {
-            setFormValue({
-                ...formValue,
-                [target.name]: target.value,
-                fuel: '',
-            });
-        } else {
-            setFormValue({
-                ...formValue,
-                [target.name]: target.value,
-            });
-        }
+        handleFormChange(setFormValue, formValue, target.name, target.value);
         setSelectedCar(emptyCarSchema);
         setValuationOverTime([]);
         setCars([]);
     };
-
-    useEffect(() => {
-        if (
-            formValue.brand !== '' &&
-            formValue.enrollmentDate !== '' &&
-            formValue.fuel !== ''
-        ) {
-            setLoading(true);
-            getCars(formValue.brand, formValue.enrollmentDate, formValue.fuel)
-                .then((resp) => {
-                    setLoading(false);
-                    setError(null);
-                    setCars(resp.data.cars);
-                })
-                .catch(() => {
-                    const fetchError = new Error('Error while fetching');
-                    setError(fetchError);
-                    setLoading(false);
-                });
-        }
-    }, [formValue]);
 
     const handleSelect = (e: ChangeEvent) => {
         const target = e.target as HTMLSelectElement;
@@ -85,67 +58,16 @@ function SearchForm() {
         );
     };
 
-    const checkFetchState = () => {
-        if (loading) {
-            return <Loading />;
-        }
-        if (cars.length > 0) {
-            return (
-                <div className="form__input-container">
-                    <label className="form__label" htmlFor="model">
-                        Modelo
-                    </label>
-                    <select
-                        className="form__input"
-                        name="model"
-                        id="model"
-                        value={selectedCar.model}
-                        onChange={handleSelect}
-                    >
-                        <option disabled value="">
-                            {' '}
-                            -- select an option --{' '}
-                        </option>
-                        {cars.map((car: CarI) => (
-                            <option key={car.model} value={car.model}>
-                                {car.model}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            );
-        }
-        if (cars.length === 0 && !error) {
-            return <DisplayError message="No se encontró ningún modelo." />;
-        }
-        return <DisplayError message={error?.message as string} />;
-    };
-
     return (
         <form className="form">
             <h1 className="form__title">Swipoo Entry Task</h1>
-            <div className="form__input-container">
-                <label className="form__label" htmlFor="brand">
-                    Marca
-                </label>
-                <select
-                    className="form__input"
-                    name="brand"
-                    id="brand"
-                    value={formValue.brand}
-                    onChange={handleChange}
-                >
-                    <option disabled value="">
-                        {' '}
-                        -- select an option --{' '}
-                    </option>
-                    {BRANDS.map((brand) => (
-                        <option key={brand} value={brand}>
-                            {brand}
-                        </option>
-                    ))}
-                </select>
-            </div>
+            <SelectBlock
+                label="Marca"
+                value={formValue.brand}
+                handleChange={handleChange}
+                options={BRANDS}
+                name="brand"
+            />
             {formValue.brand && (
                 <div className="form__input-container">
                     <label
@@ -165,33 +87,22 @@ function SearchForm() {
                 </div>
             )}
             {formValue.brand && formValue.enrollmentDate && (
-                <div className="form__input-container">
-                    <label className="form__label" htmlFor="fuel">
-                        Combustible
-                    </label>
-                    <select
-                        className="form__input"
-                        name="fuel"
-                        id="fuel"
-                        value={formValue.fuel}
-                        onChange={handleChange}
-                    >
-                        <option disabled value="">
-                            {' '}
-                            -- select an option --{' '}
-                        </option>
-                        {FUEL.map((fuel) => (
-                            <option key={fuel} value={fuel}>
-                                {fuel}
-                            </option>
-                        ))}
-                    </select>
-                </div>
+                <SelectBlock
+                    label="Combustible"
+                    value={formValue.fuel}
+                    handleChange={handleChange}
+                    options={FUEL}
+                    name="fuel"
+                />
             )}
-            {formValue.brand &&
-                formValue.enrollmentDate &&
-                formValue.fuel &&
-                checkFetchState()}
+            {checkAllFieldsAreFilled() &&
+                renderDependingOnFetchCarsState(
+                    loading,
+                    cars,
+                    selectedCar,
+                    handleSelect,
+                    error as Error
+                )}
             {selectedCar.brand && <CarDetails car={selectedCar} />}
             {valuationOverTime.length > 0 && (
                 <CarValuation valuationOverTime={valuationOverTime} />
