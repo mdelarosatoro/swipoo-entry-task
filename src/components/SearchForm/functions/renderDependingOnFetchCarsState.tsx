@@ -1,8 +1,8 @@
 import { ChangeEventHandler } from 'react';
 import { CarI } from '../../../interfaces/cars.interfaces';
 import SelectBlock from '../../Core/SelectBlock/SelectBlock';
-import Loading from '../../Loading/Loading';
-import DisplayError from '../../Error/Error';
+import Loading from '../../Core/Loading/Loading';
+import DisplayError from '../../Core/Error/Error';
 
 export const renderDependingOnFetchCarsState = (
     loading: boolean,

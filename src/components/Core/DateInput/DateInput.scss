@@ -1,6 +1,6 @@
 @use '../../../scss/variables';
 
-.select-block {
+.date-input {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
@@ -24,7 +24,7 @@
 }
 
 @media screen and (min-width: 476px) {
-    .select-block {
+    .date-input {
         &__label {
             width: 45%;
         }

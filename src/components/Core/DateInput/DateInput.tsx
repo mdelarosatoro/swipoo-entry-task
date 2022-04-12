@@ -1,5 +1,6 @@
 import { ChangeEventHandler } from 'react';
 import { FormValueI } from '../../../interfaces/form.interfaces';
+import './DateInput.scss';
 
 function DateInput({
     id,
@@ -15,12 +16,12 @@ function DateInput({
     handleChange: ChangeEventHandler;
 }) {
     return (
-        <div className="form__input-container">
-            <label className="form__label" htmlFor={id}>
+        <div className="date-input">
+            <label className="date-input__label" htmlFor={id}>
                 {label}
             </label>
             <input
-                className="form__input"
+                className="date-input__input"
                 value={formValue.enrollmentDate}
                 type="date"
                 name={name}

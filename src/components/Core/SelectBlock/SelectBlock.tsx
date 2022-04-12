@@ -1,4 +1,5 @@
 import { ChangeEventHandler } from 'react';
+import './SelectBlock.scss';
 
 function SelectBlock({
     label,
@@ -14,12 +15,12 @@ function SelectBlock({
     name: string;
 }) {
     return (
-        <div className="form__input-container">
-            <label className="form__label" htmlFor={name}>
+        <div className="select-block">
+            <label className="select-block__label" htmlFor={name}>
                 {label}
             </label>
             <select
-                className="form__input"
+                className="select-block__input"
                 name={name}
                 id={name}
                 value={value}
