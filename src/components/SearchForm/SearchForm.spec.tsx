@@ -123,7 +123,9 @@ describe('Given the SearchForm component', () => {
                 screen.getByLabelText('Combustible'),
                 ['G']
             );
-            expect(screen.getByText(expectedText)).toBeInTheDocument();
+            waitFor(() => {
+                expect(screen.getByText(expectedText)).toBeInTheDocument();
+            });
         });
     });
     describe('When selecting a car model', () => {
@@ -139,9 +141,10 @@ describe('Given the SearchForm component', () => {
                 screen.getByLabelText('Combustible'),
                 ['G']
             );
-            await userEvent.selectOptions(screen.getByLabelText('Modelo'), [
-                mockCar.model,
-            ]);
+            await userEvent.selectOptions(
+                await screen.findByLabelText('Modelo'),
+                [mockCar.model]
+            );
             waitFor(() => {
                 Object.entries(mockCar).forEach((property) => {
                     expect(property[1]).toBeInTheDocument();
